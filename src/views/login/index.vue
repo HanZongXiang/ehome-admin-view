@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login-box">
       <h2>党建e家后台管理系统</h2>
-      <el-form>
+      <el-form label-width="70px" label-position="left">
         <el-form-item label="用户名">
           <el-input v-model="formData.username"></el-input>
         </el-form-item>
@@ -36,6 +36,11 @@ export default {
       this.$axios.post('/admin/adminUser/login',this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg)
+          // let userInfo = {
+          //   username: res.data.username,
+          //   avatar: res.data.avatar
+          // }
+          // this.$store.commit('CHANGE_userInfo',userInfo)
           setTimeout(() => {
             this.$router.push('/layout/index')
           }, 1000);
@@ -58,12 +63,13 @@ export default {
     font-weight: normal;
     text-align: center;
     color: #fff;
+    margin-bottom: 35px;
   }
 
   .login-box {
     padding: 30px;
     width: 500px;
-    height: 400px;
+    height: 350px;
     box-sizing: border-box;
     border-radius: 6px;
     border: 1px solid #f1f1f1;
@@ -72,7 +78,6 @@ export default {
     .login-btn {
       display: block;
       width: 100%;
-      margin-top: 40px;
     }
   }
 
@@ -84,6 +89,10 @@ export default {
 
     .el-form-item__label {
       color: #fff;
+    }
+
+    .el-form-item {
+      margin-bottom: 50px;
     }
   }
 }

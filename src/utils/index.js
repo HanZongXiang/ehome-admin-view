@@ -35,6 +35,14 @@ class service {
   static post(url,data,config) {
     return this.fetch(url,data,config,'post')
   }
+
+  static patch(url,data,config) {
+    return this.fetch(url,data,config,'patch')
+  }
+
+  static delete(url, data, config) {
+    return this.fetch(url, data, config, 'delete')
+  }
 }
 
 export default service

@@ -54,7 +54,7 @@ export default {
         contentText: '',
         author: '',
         type: '',
-        img: 'http://oowantxlb.bkt.clouddn.com/upload/rear/749b4f2a7cc56b5c0068545718fd24d4.png'
+        img: ''
       },
       token: '',
       userData: [],

@@ -38,11 +38,25 @@ export default new Router({
         {
           path: 'userList',
           name: 'userlist',
+          meta: {
+            title: '管理员列表'
+          },
           component: () => import('@/views/user/list')
         },
         {
           path: 'userAdd',
           name: 'userAdd',
+          meta: {
+            title: '添加管理员'
+          },
+          component: () => import('@/views/user/add')
+        },
+        {
+          path: 'userEdit',
+          name: 'userEdit',
+          meta: {
+            title: '编辑信息'
+          },
           component: () => import('@/views/user/add')
         },
         {
@@ -84,6 +98,22 @@ export default new Router({
             title: '编辑轮播图'
           },
           component: () => import('@/views/swiper/add')
+        },
+        {
+          path: 'topicList',
+          name: 'topicList',
+          meta: {
+            title: '互动主题列表'
+          },
+          component: () => import('@/views/interactive/list')
+        },
+        {
+          path: 'topicAdd',
+          name: 'topicAdd',
+          meta: {
+            title: '添加互动主题'
+          },
+          component: () => import('@/views/interactive/Add')
         },
       ]
     }

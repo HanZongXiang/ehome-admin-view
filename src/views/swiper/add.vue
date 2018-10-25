@@ -75,15 +75,22 @@ export default {
         }
       })
     },
-    handleSave() {
-
-    },
     getEditData() {
       const id = this.$route.query.id
-      console.log(id)
       this.$axios.get(`/admin/swiper/${id}`).then(res => {
         if (res.code == 200) {
           this.formData = res.data
+        }
+      })
+    },
+    handleSave() {
+      const id = this.$route.query.id
+      this.$axios.patch(`/admin/swiper/${id}`,this.formData).then(res => {
+        if (res.code == 200) {
+          this.$message.success(res.msg)
+          this.$router.push({name: 'swiperList'})
+        } else {
+          this.$message.error(res.msg)
         }
       })
     },
