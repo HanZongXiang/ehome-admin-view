@@ -20,7 +20,7 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="addComment(scope.row._id)">添加评论</el-button>
-            <el-button type="warning" size="mini">编辑</el-button>
+            <el-button type="warning" size="mini" @click="handleEdit(scope.row._id)">编辑</el-button>
             <el-button type="danger" size="mini" @click="handleRemove(scope.row._id)">删除</el-button>
           </template>
         </el-table-column>
@@ -59,7 +59,6 @@ export default {
         confirmButtonText: '添加',
         cancelButtonText: '取消'
       }).then(( data ) => {
-        console.log(data.value)
         this.$axios.post('/admin/comment',{content: data.value,topicId: id}).then(res => {
           if (res.code == 200) {
             this.$message.success(res.msg)
@@ -85,9 +84,15 @@ export default {
             this.getTableData()
           }
         }).catch(() => {
-          this.$message.info(res.msg)
+          this.$message({
+            type: 'info',
+            message: '取消删除'
+          });
         })
       })
+    },
+    handleEdit(id) {
+      this.$router.push(`/layout/topicEdit/${id}`)
     }
   },
   created() {

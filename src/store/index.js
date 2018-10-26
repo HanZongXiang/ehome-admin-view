@@ -7,7 +7,9 @@ const store = new Vuex.Store({
   state:{
     userInfo: {
       avatar: '',
-      username: ''
+      username: '',
+      id: '',
+      nickname: ''
     }
   },
   actions: {},
@@ -19,9 +21,9 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       storage: {
-        setItem: key => sessionStorage.setItem(key),
-        getItem: (key,value) => sessionStorage.getItem(key,value),
-        removeItem: key => sessionStorage.removeItem(key)
+        setItem: (key, value) => localStorage.setItem(key, value),
+        getItem: key => localStorage.getItem(key),
+        removeItem: key => localStorage.removeItem(key)
       }
     })
   ]

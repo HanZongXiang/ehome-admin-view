@@ -36,11 +36,13 @@ export default {
       this.$axios.post('/admin/adminUser/login',this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg)
-          // let userInfo = {
-          //   username: res.data.username,
-          //   avatar: res.data.avatar
-          // }
-          // this.$store.commit('CHANGE_userInfo',userInfo)
+          let userInfo = {
+            username: res.data.username,
+            avatar: res.data.avatar,
+            id: res.data.id,
+            nickname: res.data.nickname
+          }
+          this.$store.commit('CHANGE_userInfo',userInfo)
           setTimeout(() => {
             this.$router.push('/layout/index')
           }, 1000);

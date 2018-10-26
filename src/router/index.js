@@ -33,6 +33,9 @@ export default new Router({
         {
           path: 'index',
           name: 'home',
+          meta: {
+            title: '首页'
+          },
           component: () => import('@/views/index/index')
         },
         {
@@ -60,6 +63,14 @@ export default new Router({
           component: () => import('@/views/user/add')
         },
         {
+          path: 'userDetail/:id',
+          name: 'userDetail',
+          meta: {
+            title: '详细信息'
+          },
+          component: () => import('@/views/user/detail')
+        },
+        {
           path: 'newsList',
           name: 'newsList',
           meta: {
@@ -74,6 +85,14 @@ export default new Router({
             title: '新闻管理'
           },
           component: () => import('@/views/news/add')
+        },
+        {
+          path: 'newsDetail/:id',
+          name: 'newsDetail',
+          meta: {
+            title: '新闻管理'
+          },
+          component: () => import('@/views/news/detail')
         },
         {
           path: 'swiperList',
@@ -113,7 +132,15 @@ export default new Router({
           meta: {
             title: '添加互动主题'
           },
-          component: () => import('@/views/interactive/Add')
+          component: () => import('@/views/interactive/add')
+        },
+        {
+          path: 'topicEdit/:id',
+          name: 'topicEdit',
+          meta: {
+            title: '编辑主题信息'
+          },
+          component: () => import('@/views/interactive/edit')
         },
       ]
     }

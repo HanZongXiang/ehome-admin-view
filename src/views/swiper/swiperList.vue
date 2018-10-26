@@ -18,8 +18,8 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" @click="handleEdit(scope.row._id)">编辑</el-button>
-            <el-button type="danger">删除</el-button>
+            <el-button type="primary" @click="handleEdit(scope.row._id)" size="mini">编辑</el-button>
+            <el-button type="danger" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

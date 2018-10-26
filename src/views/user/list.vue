@@ -70,6 +70,9 @@ export default {
     },
     handleEdit(id) {
       this.$router.push({name: 'userEdit',query: {id}})
+    },
+    handleDetail(id) {
+      this.$router.push(`/layout/userDetail/${id}`)
     }
   },
   created() {
