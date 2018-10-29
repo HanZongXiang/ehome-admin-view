@@ -52,4 +52,11 @@ a {
 .main-wrap .el-card {
   min-height: calc(100vh - 160px);
 }
+
+.page-wrap {
+  margin-top: 10px;
+  width: 500px;
+  margin-right: auto;
+  margin-left: auto;
+}
 </style>

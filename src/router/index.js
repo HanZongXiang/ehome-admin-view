@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import layout from '@/views/layout'
+import Nprogress from 'nprogress'
+import "nprogress/nprogress.css"
 
 Vue.use(Router)
 
@@ -10,7 +11,7 @@ const components = {
   index:() => import('@/components/AppMain')
 }
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
@@ -74,7 +75,7 @@ export default new Router({
           path: 'newsList',
           name: 'newsList',
           meta: {
-            title: '新闻管理'
+            title: '新闻列表'
           },
           component: () => import('@/views/news/list')
         },
@@ -82,7 +83,7 @@ export default new Router({
           path: 'newsAdd',
           name: 'newsAdd',
           meta: {
-            title: '新闻管理'
+            title: '新闻添加'
           },
           component: () => import('@/views/news/add')
         },
@@ -90,9 +91,17 @@ export default new Router({
           path: 'newsDetail/:id',
           name: 'newsDetail',
           meta: {
-            title: '新闻管理'
+            title: '新闻详情'
           },
           component: () => import('@/views/news/detail')
+        },
+        {
+          path: 'newsEdit/:id',
+          name: 'newsEdit',
+          meta: {
+            title: '新闻编辑'
+          },
+          component: () => import('@/views/news/add')
         },
         {
           path: 'swiperList',
@@ -146,3 +155,16 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to,from,next) => {
+  Nprogress.start()
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
+
+router.afterEach((to,from) => {
+  Nprogress.done()
+})
+export default router

@@ -107,7 +107,7 @@ export default {
     }
   },
   watch: {
-    $route(to,form){
+    $route(to,from){
       if (to.name == 'swiperEdit') {
         this.isEdit = true
       } else {

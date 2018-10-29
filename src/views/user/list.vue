@@ -4,7 +4,12 @@
       <div slot="header">
         管理员列表
       </div>
-      <el-table :data="userData" border>
+      <el-table :data="userData" border
+        v-loading.fullscreen="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
         <el-table-column label="姓名" prop="nickname" width="150"></el-table-column>
         <el-table-column label="手机号" prop="phone" width="180"></el-table-column>
         <el-table-column label="头像" prop="avatar" width="200">
@@ -26,6 +31,16 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="page-wrap">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :page-size="5"
+          @current-change="pageChange"
+        >
+        </el-pagination>
+      </div>
     </el-card>
   </div>
 </template>
@@ -35,7 +50,10 @@ export default {
   name:'',
   data() {
     return {
-      userData: []
+      userData: [],
+      total: 0,
+      page: 1,
+      loading: false
     }
   },
   components: {
@@ -43,12 +61,18 @@ export default {
   },
   methods: {
     getUserData() {
-      this.$axios.get('/admin/adminUser').then(res => {
+      this.loading = true
+      this.$axios.get('/admin/adminUser',{page: this.page,page_size: 5}).then(res => {
         if (res.code == 200) {
+          this.loading = false
           this.userData = res.data
+          this.total = res.total
         } else {
+          this.loading = false
           this.$message.info('数据请求失败')
         }
+      }).catch(err => {
+        this.loading = false
       })
     },
     handleDetail() {},
@@ -73,6 +97,10 @@ export default {
     },
     handleDetail(id) {
       this.$router.push(`/layout/userDetail/${id}`)
+    },
+    pageChange(page) {
+      this.page = page
+      this.getUserData()
     }
   },
   created() {
@@ -81,5 +109,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+
 </style>

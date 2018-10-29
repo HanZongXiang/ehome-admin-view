@@ -7,7 +7,12 @@
           <i class="el-icon-circle-plus"></i>添加新闻分类
         </el-button>
       </div>
-      <el-table :data="tableData" border>
+      <el-table :data="tableData" border
+        v-loading.fullscreen="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
         <el-table-column label="新闻标题" prop="title" width="260px">
 
         </el-table-column>
@@ -28,6 +33,17 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <div class="page-wrap">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :page-size="5"
+          @current-change="pageChange"
+        >
+        </el-pagination>
+      </div>
     </el-card>
   </div>
 </template>
@@ -38,6 +54,9 @@ export default {
   data() {
     return {
       tableData: [],
+      page: 1,
+      total: 0,
+      loading: false
     }
   },
   components: {
@@ -45,12 +64,18 @@ export default {
   },
   methods: {
     getTableData() {
-      this.$axios.get('/admin/news').then(res => {
+      this.loading = true
+      this.$axios.get('/admin/news',{page: this.page,page_size:5}).then(res => {
         if (res.code == 200) {
+          this.loading = false
           this.tableData =res.data
+          this.total = res.total
         } else {
+          this.loading = false
           this.$message.error(res.msg)
         }
+      }).catch(err => {
+        this.loading = false
       })
     },
     handleDetail(id) {
@@ -93,6 +118,13 @@ export default {
         });       
       });
     },
+    handleEdit(id) {
+      this.$router.push(`/layout/newsEdit/${id}`)
+    },
+    pageChange(page) {
+      this.page = page
+      this.getTableData()
+    }
   },
   created() {
     this.getTableData()

@@ -2,7 +2,12 @@
   <div class="list-wrap">
     <el-card>
       <div slot="header">主题列表</div>
-      <el-table :data="tableData" border>
+      <el-table :data="tableData" border
+        v-loading.fullscreen="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
         <el-table-column label="主题内容" prop="content">
 
         </el-table-column>
@@ -25,6 +30,17 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <div class="page-wrap">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :page-size="5"
+          @current-change="pageChange"
+        >
+        </el-pagination>
+      </div>
     </el-card>
   </div>
 </template>
@@ -36,7 +52,8 @@ export default {
     return {
       tableData: [],
       page: 1,
-      page_size: 10
+      total: 0,
+      loading: false
     }
   },
   components: {
@@ -44,14 +61,18 @@ export default {
   },
   methods: {
     getTableData() {
+      this.loading = true
       let page = this.page
-      let page_size = this.page_size
-      this.$axios.get('/admin/topic',{page,page_size}).then(res => {
+      this.$axios.get('/admin/topic',{page,page_size: 5}).then(res => {
+        this.loading = false
         if (res.code == 200) {
+          this.total = res.count
           this.tableData = res.data
         } else {
           this.$message.error(res.msg)
         }
+      }).catch(err => {
+        this.loading = false
       })
     },
     addComment(id) {
@@ -93,6 +114,10 @@ export default {
     },
     handleEdit(id) {
       this.$router.push(`/layout/topicEdit/${id}`)
+    },
+    pageChange(page) {
+      this.page = page
+      this.getTableData()
     }
   },
   created() {

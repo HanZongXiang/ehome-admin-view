@@ -28,7 +28,10 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleAdd">添加</el-button>
+          <el-button type="primary" @click="handleAdd" v-if="!this.isEdit">
+            添加
+          </el-button>
+          <el-button type="warning" @click="handleSave" v-else>保存</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -48,6 +51,7 @@ export default {
   name:'',
   data() {
     return {
+      isEdit: false,
       formData: {
         title: '',
         content: '',
@@ -129,12 +133,56 @@ export default {
           this.$message.info(res.msg)
         }
       })
+    },
+    getEditData() {
+      const {id} = this.$route.params
+      this.$axios.get(`/admin/news/${id}`).then(res => {
+        if (res.code == 200) {
+          this.formData = res.data
+        }
+      })
+    },
+    handleSave() {
+      const {id} = this.$route.params
+      this.$axios.patch(`/admin/news/${id}`,this.formData).then(res => {
+        if (res.code == 200) {
+          this.$message.success(res.msg)
+          this.$router.push('/layout/newsList')
+        } else {
+          this.$message.error('未知错误')
+        }
+      })
     }
   },
   created() {
     this.getUserData()
     this.getToken()
     this.getType()
+    if (this.$route.name == 'newsEdit') {
+      this.isEdit = true
+    } else {
+      this.isEdit = false
+    }
+    if (this.isEdit) {
+      this.getEditData()
+    }
+  },
+  watch: {
+    $route(to,from) {
+      if(to.name == 'newsEdit') {
+        this.isEdit = true
+      } else {
+        this.isEdit = false
+        this.formData = {
+          title: '',
+          content: '',
+          contentText: '',
+          author: '',
+          type: '',
+          img: ''
+        }
+      }
+    }
   }
 }
 </script>

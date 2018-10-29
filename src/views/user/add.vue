@@ -13,7 +13,7 @@
             <el-input v-model="formData.username"></el-input>
           </el-form-item>
           <el-form-item label="密码" required>
-            <el-input v-model="formData.password"></el-input>
+            <el-input v-model="formData.password" type="password"></el-input>
           </el-form-item>
           <el-form-item label="昵称">
             <el-input v-model="formData.nickname"></el-input>
