@@ -1,10 +1,13 @@
 <template>
   <div class="list-wrap">
+    <div>
+      <el-input type="text" v-model="keyword"></el-input>
+    </div>
     <el-card>
       <div slot="header">
         管理员列表
       </div>
-      <el-table :data="userData" border
+      <el-table :data="filteredList" border
         v-loading.fullscreen="loading"
         element-loading-text="拼命加载中"
         element-loading-spinner="el-icon-loading"
@@ -53,7 +56,8 @@ export default {
       userData: [],
       total: 0,
       page: 1,
-      loading: false
+      loading: false,
+      keyword: ''
     }
   },
   components: {
@@ -105,6 +109,13 @@ export default {
   },
   created() {
     this.getUserData()
+  },
+  computed: {
+    filteredList() {
+      return this.userData.filter(item => {
+        return item.nickname.toLowerCase().includes(this.keyword.toLowerCase())
+      })
+    }
   }
 }
 </script>
