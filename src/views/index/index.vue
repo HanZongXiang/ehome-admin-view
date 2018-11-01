@@ -1,6 +1,6 @@
 <template>
   <div class="index-wrap">
-    <vue-particles
+    <!-- <vue-particles
       color="#6495ED"
       :particleOpacity="0.8"
       :particlesNumber="60"
@@ -17,7 +17,7 @@
       :clickEffect="true"
       clickMode="push"
     >
-    </vue-particles>
+    </vue-particles> -->
   </div>
 </template>
 

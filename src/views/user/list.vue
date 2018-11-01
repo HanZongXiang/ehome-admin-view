@@ -37,7 +37,7 @@
       <div class="page-wrap">
         <el-pagination
           background
-          layout="prev, pager, next"
+          layout="prev, pager, next, jumper"
           :total="total"
           :page-size="5"
           @current-change="pageChange"
